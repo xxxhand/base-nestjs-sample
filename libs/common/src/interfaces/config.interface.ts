@@ -1,4 +1,6 @@
 export interface IConfig {
+  port: number;
+  domain: string;
   defaultMongo: {
     uri: string;
     minPoolSize: number;

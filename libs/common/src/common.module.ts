@@ -1,11 +1,13 @@
-import { Module, Global } from '@nestjs/common';
+import { Module, Global, OnModuleInit } from '@nestjs/common';
 import { TMongooseClient, CustomDefinition } from '@xxxhand/app-common';
 
-import { DEFAULT_MONGO, CMM_CFG } from './common.const';
-import { CommonService } from './common.service';
-import { DefaultMongoose } from './clients/default.mongoose';
-import { IConfig } from './interfaces/config.interface';
 import { cmmConf } from './common.config';
+import { CommonService } from './common.service';
+import { errCodes } from './exceptions/err.code';
+import { DEFAULT_MONGO, CMM_CFG } from './common.const';
+import { IConfig } from './interfaces/config.interface';
+import { ErrException } from './exceptions/err.exception';
+import { DefaultMongoose } from './clients/default.mongoose';
 
 @Global()
 @Module({
@@ -37,4 +39,9 @@ import { cmmConf } from './common.config';
   ],
   exports: [CommonService, DEFAULT_MONGO],
 })
-export class CommonModule {}
+export class CommonModule implements OnModuleInit {
+  onModuleInit() {
+    // Initial all error codes
+    ErrException.addCodes(errCodes);
+  }
+}

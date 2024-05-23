@@ -10,4 +10,6 @@ export const cmmConf: IConfig = {
     user: process.env.DEFAULT_MONGO_USER,
     password: process.env.DEFAULT_MONGO_PASS,
   },
+  port: Number.parseInt(process.env.PORT),
+  domain: process.env.DOMAIN,
 };
