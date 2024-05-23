@@ -5,7 +5,7 @@ import { DEFAULT_MONGO, CMM_CFG } from './common.const';
 import { CommonService } from './common.service';
 import { DefaultMongoose } from './clients/default.mongoose';
 import { IConfig } from './interfaces/config.interface';
-import { cmmConfig } from './common.config';
+import { cmmConf } from './common.config';
 
 @Global()
 @Module({
@@ -13,12 +13,12 @@ import { cmmConfig } from './common.config';
     CommonService,
     {
       provide: CMM_CFG,
-      useValue: cmmConfig
+      useValue: cmmConf,
     },
     {
       provide: DEFAULT_MONGO,
       useFactory: async (conf: IConfig): Promise<TMongooseClient> => {
-        const uri = conf.defaultMongo.uri
+        const uri = conf.defaultMongo.uri;
         const opt: CustomDefinition.IMongoOptions = {
           minPoolSize: conf.defaultMongo.minPoolSize,
           maxPoolSize: conf.defaultMongo.maxPoolSize,
@@ -26,15 +26,15 @@ import { cmmConfig } from './common.config';
           db: conf.defaultMongo.dbName,
           user: conf.defaultMongo.user,
           pass: conf.defaultMongo.password,
-          directConnect: true
+          directConnect: true,
         };
         const client = new DefaultMongoose(uri, opt);
         await client.tryConnect();
         return client;
       },
-      inject: [CMM_CFG]
-    }
+      inject: [CMM_CFG],
+    },
   ],
   exports: [CommonService, DEFAULT_MONGO],
 })
-export class CommonModule { }
+export class CommonModule {}
