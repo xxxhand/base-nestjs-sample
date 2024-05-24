@@ -1,12 +1,21 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CMM_CFG } from './common.const';
+import { TMongooseClient } from '@xxxhand/app-common';
+import { CMM_CFG, DEFAULT_MONGO } from './common.const';
 import { IConfig } from './interfaces/config.interface';
 @Injectable()
 export class CommonService {
-  constructor(@Inject(CMM_CFG) private readonly cmmConf: IConfig) {}
+  constructor(
+    @Inject(CMM_CFG) private readonly cmmConf: IConfig,
+    @Inject(DEFAULT_MONGO) private readonly defMongoClient: TMongooseClient,
+  ) {}
 
   /** Get current project configuration */
   public getConf(): IConfig {
     return this.cmmConf;
+  }
+
+  /** To release all used resouces, usually using on application shutdown */
+  public async releaseResources(): Promise<void> {
+    this.defMongoClient.terminate();
   }
 }

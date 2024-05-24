@@ -13,12 +13,15 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableShutdownHooks();
   // 啟用Api path versioning
   app.enableVersioning({ type: VersioningType.URI });
   // 設置Api path 前綴字
   app.setGlobalPrefix(
     cmmConf.defaultApiRouterPrefix,
-    { exclude: [{ path: '/', method: RequestMethod.GET }] });
+    // 設定要忽略前綴的routes
+    { exclude: [{ path: '/', method: RequestMethod.GET }] },
+  );
 
   await app.listen(cmmConf.port);
 }
