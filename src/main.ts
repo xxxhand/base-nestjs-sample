@@ -6,7 +6,7 @@ expand({ parsed: dotenv.config().parsed });
 /** Load environment variables */
 
 import { NestFactory } from '@nestjs/core';
-import { RequestMethod, VersioningType } from '@nestjs/common';
+import { RequestMethod, VersioningType, ValidationPipe } from '@nestjs/common';
 import { cmmConf } from '@myapp/common';
 
 import { AppModule } from './app.module';
@@ -22,6 +22,9 @@ async function bootstrap() {
     // 設定要忽略前綴的routes
     { exclude: [{ path: '/', method: RequestMethod.GET }] },
   );
+
+  // 設定驗證request body
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
   await app.listen(cmmConf.port);
 }

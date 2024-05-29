@@ -3,10 +3,8 @@ import { TMongooseClient, CustomDefinition } from '@xxxhand/app-common';
 
 import { cmmConf } from './common.config';
 import { CommonService } from './common.service';
-import { errCodes } from './exceptions/err.code';
 import { DEFAULT_MONGO, CMM_CFG } from './common.const';
 import { IConfig } from './interfaces/config.interface';
-import { ErrException } from './exceptions/err.exception';
 import { DefaultMongoose } from './clients/default.mongoose';
 
 @Global()
@@ -42,6 +40,5 @@ import { DefaultMongoose } from './clients/default.mongoose';
 export class CommonModule implements OnModuleInit {
   onModuleInit() {
     // Initial all error codes
-    ErrException.addCodes(errCodes);
   }
 }

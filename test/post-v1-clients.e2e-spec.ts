@@ -9,7 +9,7 @@ interface IBody {
 };
 
 describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => {
-    const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/api/v1/clients`;
+    const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients`;
     let agent: superTest.SuperAgentTest;
     const db = new MongoHelper();
     const clientCol = 'Clients';
@@ -36,7 +36,7 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => 
 
             expect(res.status).toBe(400);
             expect(res.body.code).toBe(10001);
-            expect(res.body.message).toBe('無效客戶名稱');
+            expect(res.body.message).toBe('Client name is empty');
         });
         test('[10002] Parameter "callbackUrl" is empty', async () => {
             const b = _.cloneDeep(defaultBody);
@@ -47,7 +47,7 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => 
 
             expect(res.status).toBe(400);
             expect(res.body.code).toBe(10002);
-            expect(res.body.message).toBe('無效客戶回調網址');
+            expect(res.body.message).toBe('Client callback url is empty');
         });
     });
     describe('Validation rules', () => {
