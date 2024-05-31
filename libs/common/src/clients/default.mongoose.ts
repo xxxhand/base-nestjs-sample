@@ -1,8 +1,4 @@
-import {
-  TMongooseClient,
-  CustomDefinition,
-  CustomValidator,
-} from '@xxxhand/app-common';
+import { TMongooseClient, CustomDefinition, CustomValidator } from '@xxxhand/app-common';
 
 export class DefaultMongoose extends TMongooseClient {
   constructor(uri: string, connOpt: CustomDefinition.IMongoOptions) {

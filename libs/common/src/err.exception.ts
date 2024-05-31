@@ -1,10 +1,6 @@
 import * as util from 'util';
 import { HttpException } from '@nestjs/common';
-import {
-  CustomDefinition,
-  CustomError,
-  CustomValidator,
-} from '@xxxhand/app-common';
+import { CustomDefinition, CustomError, CustomValidator } from '@xxxhand/app-common';
 
 export class ErrException extends HttpException {
   private code: number = 0;
@@ -49,10 +45,7 @@ export class ErrException extends HttpException {
     CustomError.addCodes(codes);
   }
 
-  public static newFromCodeName(
-    codeName: string,
-    msgArgs?: Array<string | number>,
-  ): ErrException {
+  public static newFromCodeName(codeName: string, msgArgs?: Array<string | number>): ErrException {
     const oCode = CustomError.getCode(codeName);
     const exp = new ErrException(oCode.message, oCode.httpStatus);
     exp.setCode(oCode.code);
@@ -108,10 +101,7 @@ export class ErrException extends HttpException {
           }
           if (typeof cErr['message'] === 'string') {
             unSupportedMsg = cErr['message'];
-          } else if (
-            Array.isArray(cErr['message']) &&
-            cErr['message'].length > 0
-          ) {
+          } else if (Array.isArray(cErr['message']) && cErr['message'].length > 0) {
             unSupportedMsg = cErr['message'].shift();
           }
           exp = ErrException.newFromCodeName(unSupportedMsg);

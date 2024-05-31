@@ -13,12 +13,12 @@ import { CoreModule } from './core/core.module';
     AppService,
     {
       provide: APP_FILTER,
-      useClass: AppExceptionFilter
-    }
+      useClass: AppExceptionFilter,
+    },
   ],
 })
 export class AppModule implements BeforeApplicationShutdown {
-  constructor(private readonly cmmService: CommonService) { }
+  constructor(private readonly cmmService: CommonService) {}
 
   async beforeApplicationShutdown(signal?: string) {
     this.cmmService.releaseResources();
