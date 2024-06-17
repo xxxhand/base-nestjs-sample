@@ -1,11 +1,10 @@
 import { APP_FILTER } from '@nestjs/core';
 import { Module, BeforeApplicationShutdown } from '@nestjs/common';
 import { CommonModule, CommonService } from '@myapp/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AppExceptionFilter } from './app-exception.filter';
+import { AppController } from './app.controller';
 import { CoreModule } from './core/core.module';
-
+import { AppExceptionFilter } from './middlewares/app-exception.filter';
 @Module({
   imports: [CommonModule, CoreModule],
   controllers: [AppController],

@@ -3,7 +3,7 @@ import { ErrException } from '@myapp/common';
 import { CustomResult } from '@xxxhand/app-common';
 import { ExceptionFilter, Catch, ArgumentsHost, Logger } from '@nestjs/common';
 
-import * as appConstants from './app.const';
+import * as appConstants from '@myapp/common';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {

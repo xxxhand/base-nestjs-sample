@@ -1,7 +1,8 @@
 import * as superTest from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, RequestMethod, ValidationPipe, VersioningType } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../../src/app.module';
+import { runInitial } from '../../src/app.initial';
 
 export class AppHelper {
   private static _app?: INestApplication = undefined;
@@ -14,12 +15,7 @@ export class AppHelper {
       }).compile();
 
       this._app = moduleFixture.createNestApplication();
-      this._app.enableShutdownHooks();
-      this._app.enableVersioning({ type: VersioningType.URI });
-      this._app.setGlobalPrefix(process.env.DEFAULT_API_ROUTER_PREFIX, {
-        exclude: [{ path: '/', method: RequestMethod.GET }],
-      });
-      this._app.useGlobalPipes(new ValidationPipe({ transform: true }));
+      runInitial(this._app);
       await this._app.init();
       this._agent = superTest.agent(this._app.getHttpServer());
     }
