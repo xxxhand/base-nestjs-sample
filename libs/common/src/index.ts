@@ -4,3 +4,4 @@ export * from './common.const';
 export { cmmConf } from './common.config';
 export { ErrException } from './err.exception';
 export { IConfig } from './interfaces/config.interface';
+export { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';

@@ -6,6 +6,7 @@ import { CommonService } from './common.service';
 import { DEFAULT_MONGO, CMM_CFG } from './common.const';
 import { IConfig } from './interfaces/config.interface';
 import { DefaultMongoose } from './clients/default.mongoose';
+import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
 
 @Global()
 @Module({
@@ -34,6 +35,7 @@ import { DefaultMongoose } from './clients/default.mongoose';
       },
       inject: [CMM_CFG],
     },
+    AsyncLocalStorageProvider,
   ],
   exports: [CommonService, DEFAULT_MONGO],
 })

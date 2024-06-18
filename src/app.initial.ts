@@ -3,17 +3,17 @@ import { RequestMethod, VersioningType, ValidationPipe } from '@nestjs/common';
 import { cmmConf } from '@myapp/common';
 
 export function runInitial(app: INestApplication): void {
-    // 啟用application shutdown通知
-    app.enableShutdownHooks();
-    // 啟用Api path versioning
-    app.enableVersioning({ type: VersioningType.URI });
-    // 設置Api path 前綴字
-    app.setGlobalPrefix(
-        cmmConf.defaultApiRouterPrefix,
-        // 設定要忽略前綴的routes
-        { exclude: [{ path: '/', method: RequestMethod.GET }] },
-    );
+  // 啟用application shutdown通知
+  app.enableShutdownHooks();
+  // 啟用Api path versioning
+  app.enableVersioning({ type: VersioningType.URI });
+  // 設置Api path 前綴字
+  app.setGlobalPrefix(
+    cmmConf.defaultApiRouterPrefix,
+    // 設定要忽略前綴的routes
+    { exclude: [{ path: '/', method: RequestMethod.GET }] },
+  );
 
-    // 設定驗證request body
-    app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  // 設定驗證request body
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 }

@@ -1,0 +1,14 @@
+import { NestMiddleware, Injectable } from '@nestjs/common';
+import { CustomUtils } from '@xxxhand/app-common';
+import { Request, Response, NextFunction } from 'express';
+import { X_TRACE_ID, CommonService } from '@myapp/common';
+
+@Injectable()
+export class AppMiddleware implements NestMiddleware {
+  constructor(private readonly cmmService: CommonService) {}
+
+  use(req: Request, res: Response, next: NextFunction) {
+    const reqId = (req.headers[X_TRACE_ID] as string) || CustomUtils.makeUUID();
+    this.cmmService.getLocalStorage().run(reqId, () => next());
+  }
+}
