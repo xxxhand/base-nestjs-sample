@@ -16,9 +16,9 @@ export class CommonService {
     return this.cmmConf;
   }
 
-  /** To release all used resouces, usually using on application shutdown */
-  public async releaseResources(): Promise<void> {
-    this.defMongoClient.terminate();
+  /** Get default mongoose client */
+  public getDefaultMongooseClient(): TMongooseClient {
+    return this.defMongoClient;
   }
 
   /** Get current asyncLocalStorage */
@@ -29,5 +29,9 @@ export class CommonService {
   /** To build new one CustomResult object within trace id */
   public newResultInstance(): CustomResult {
     return new CustomResult().withTraceId(this.alsProvider.store);
+  }
+  /** To release all used resouces, usually using on application shutdown */
+  public async releaseResources(): Promise<void> {
+    this.defMongoClient.terminate();
   }
 }

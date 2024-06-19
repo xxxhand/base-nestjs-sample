@@ -1,6 +1,6 @@
 import { APP_FILTER } from '@nestjs/core';
 import { CommonModule, CommonService } from '@myapp/common';
-import { Module, BeforeApplicationShutdown, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { Module, BeforeApplicationShutdown, MiddlewareConsumer, NestModule, OnApplicationBootstrap } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { CoreModule } from './core/core.module';
@@ -17,11 +17,15 @@ import { AppMiddleware } from './middlewares/app.middleware';
     },
   ],
 })
-export class AppModule implements NestModule, BeforeApplicationShutdown {
+export class AppModule implements NestModule, OnApplicationBootstrap, BeforeApplicationShutdown {
   constructor(private readonly cmmService: CommonService) {}
+
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AppMiddleware).forRoutes('*');
   }
+
+  async onApplicationBootstrap() {}
+
   async beforeApplicationShutdown(signal?: string) {
     this.cmmService.releaseResources();
   }

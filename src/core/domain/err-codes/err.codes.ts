@@ -14,4 +14,10 @@ export const errCodes: CustomDefinition.ICodeStruct[] = [
     httpStatus: 400,
     message: 'Client callback url is empty',
   },
+  {
+    codeName: errConstants.ERR_CLIENT_DUPLICATED,
+    code: 10003,
+    httpStatus: 400,
+    message: 'Client duplicated',
+  },
 ];

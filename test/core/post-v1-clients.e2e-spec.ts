@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
 import * as superTest from 'supertest';
-import { AppHelper } from './__helpers__/app.helper';
-import { MongoHelper } from './__helpers__/mongo.helper';
+import { CustomUtils } from '@xxxhand/app-common';
+import { AppHelper } from '../__helpers__/app.helper';
+import { MongoHelper } from '../__helpers__/mongo.helper';
 
 interface IBody {
   name: string;
@@ -46,6 +47,30 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => 
       expect(res.body.message).toBe('Client callback url is empty');
     });
   });
-  describe('Validation rules', () => {});
-  describe('Success', () => {});
+  describe('Validation rules', () => {
+    test('[10003] Client name exists', async () => {
+      await db.getCollection(clientCol).insertOne({ name: 'xxxhand' });
+      const b = _.cloneDeep(defaultBody);
+      b.name = 'xxxhand';
+      const res = await agent.post(endpoint).send(b);
+
+      expect(res.status).toBe(400);
+      expect(res.body.code).toBe(10003);
+      expect(res.body.message).toBe('Client duplicated');
+    });
+  });
+  describe('Success', () => {
+    test('Client created', async () => {
+      const res = await agent.post(endpoint).send(defaultBody);
+      expect(res.status).toBe(201);
+      expect(res.body.code).toBe(0);
+      expect(res.body.message).toBe('');
+      expect(res.body.result).toBeTruthy();
+      // DB checking
+      const doc = await db.getCollection(clientCol).findOne(CustomUtils.stringToObjectId(<string>res.body.result));
+      expect(doc).toBeTruthy();
+      expect(doc.name).toBe('iLearning');
+      expect(doc.callbackUrl).toBe('https://xxx.ccc.com');
+    });
+  });
 });
