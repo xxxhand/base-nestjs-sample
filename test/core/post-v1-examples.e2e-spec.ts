@@ -9,11 +9,11 @@ interface IBody {
   callbackUrl: string;
 }
 
-describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => {
-  const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients`;
+describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples spec`, () => {
+  const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples`;
   let agent: superTest.SuperAgentTest;
   const db = new MongoHelper();
-  const clientCol = 'Clients';
+  const col = 'Examples';
   const defaultBody: IBody = {
     name: 'iLearning',
     callbackUrl: 'https://xxx.ccc.com',
@@ -24,7 +24,7 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => 
   });
   afterAll(async () => {
     await AppHelper.closeAgent();
-    await db.clear([clientCol]);
+    await db.clear([col]);
     db.close();
   });
   describe('Required fields', () => {
@@ -49,7 +49,7 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => 
   });
   describe('Validation rules', () => {
     test('[10003] Client name exists', async () => {
-      await db.getCollection(clientCol).insertOne({ name: 'xxxhand' });
+      await db.getCollection(col).insertOne({ name: 'xxxhand' });
       const b = _.cloneDeep(defaultBody);
       b.name = 'xxxhand';
       const res = await agent.post(endpoint).send(b);
@@ -67,7 +67,7 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/clients spec`, () => 
       expect(res.body.message).toBe('');
       expect(res.body.result).toBeTruthy();
       // DB checking
-      const doc = await db.getCollection(clientCol).findOne(CustomUtils.stringToObjectId(<string>res.body.result));
+      const doc = await db.getCollection(col).findOne(CustomUtils.stringToObjectId(<string>res.body.result));
       expect(doc).toBeTruthy();
       expect(doc.name).toBe('iLearning');
       expect(doc.callbackUrl).toBe('https://xxx.ccc.com');

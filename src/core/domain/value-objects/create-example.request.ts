@@ -1,7 +1,7 @@
 import * as cv from 'class-validator';
 import { errConstants } from '../err-codes/err.const';
 
-export class CreateClientRequest {
+export class CreateExampleRequest {
   @cv.IsNotEmpty({ message: errConstants.ERR_CLIENT_NAME_EMPTY })
   @cv.IsString({ message: errConstants.ERR_CLIENT_NAME_EMPTY })
   public name: string = '';

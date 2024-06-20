@@ -1,7 +1,7 @@
 import { prop, index } from '@typegoose/typegoose';
 
 @index({ name: 1 }, { unique: true })
-export class ClientModel {
+export class ExampleModel {
   /** Client name */
   @prop({ required: true, trim: true })
   name: string;

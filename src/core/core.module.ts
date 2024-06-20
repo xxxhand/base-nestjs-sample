@@ -4,7 +4,7 @@ import { ErrException, DEFAULT_MONGO } from '@myapp/common';
 
 import { errCodes } from './domain/err-codes/err.codes';
 import { ClientController } from './controllers/client.controller';
-import { ClientRepository } from './infra/repositories/client.repository';
+import { ExampleRepository } from './infra/repositories/example.repository';
 import { loadModelsIntoDefaultContainer } from './infra/models/models.definition';
 
 @Module({
@@ -19,7 +19,7 @@ import { loadModelsIntoDefaultContainer } from './infra/models/models.definition
       },
       inject: [DEFAULT_MONGO],
     },
-    ClientRepository,
+    ExampleRepository,
   ],
 })
 export class CoreModule implements OnModuleInit {

@@ -2,31 +2,31 @@ import { CustomResult } from '@xxxhand/app-common';
 import { Post, Body, Controller } from '@nestjs/common';
 import { CommonService, ErrException } from '@myapp/common';
 import { errConstants } from '../domain/err-codes/err.const';
-import { ClientEntity } from '../domain/entities/client.entity';
-import { ClientRepository } from '../infra/repositories/client.repository';
-import { CreateClientRequest } from '../domain/value-objects/create-client.request';
+import { ExampleEntity } from '../domain/entities/example.entity';
+import { ExampleRepository } from '../infra/repositories/example.repository';
+import { CreateExampleRequest } from '../domain/value-objects/create-example.request';
 
 @Controller({
-  path: 'clients',
+  path: 'examples',
   version: '1',
 })
 export class ClientController {
   constructor(
     private readonly cmmService: CommonService,
-    private readonly repo: ClientRepository,
+    private readonly repo: ExampleRepository,
   ) {}
 
   @Post()
-  public async createClient(@Body() body: CreateClientRequest): Promise<CustomResult> {
-    let currClient = await this.repo.findOneByName(body.name);
-    if (currClient) {
+  public async createClient(@Body() body: CreateExampleRequest): Promise<CustomResult> {
+    let currExample = await this.repo.findOneByName(body.name);
+    if (currExample) {
       throw ErrException.newFromCodeName(errConstants.ERR_CLIENT_DUPLICATED);
     }
-    currClient = new ClientEntity();
-    currClient.name = body.name;
-    currClient.callbackUrl = body.callbackUrl;
-    currClient = await this.repo.save(currClient);
+    currExample = new ExampleEntity();
+    currExample.name = body.name;
+    currExample.callbackUrl = body.callbackUrl;
+    currExample = await this.repo.save(currExample);
 
-    return this.cmmService.newResultInstance().withResult(currClient.id);
+    return this.cmmService.newResultInstance().withResult(currExample.id);
   }
 }
