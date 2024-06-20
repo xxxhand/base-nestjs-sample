@@ -1,7 +1,7 @@
 import { CustomResult } from '@xxxhand/app-common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Post, Body, Controller, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { CommonService, ErrException } from '@myapp/common';
+import { CommonService, ErrException, cmmConf } from '@myapp/common';
 import { errConstants } from '../domain/err-codes/err.const';
 import { ExampleEntity } from '../domain/entities/example.entity';
 import { ExampleRepository } from '../infra/repositories/example.repository';
@@ -32,7 +32,7 @@ export class ClientController {
   }
 
   @Post('/upload')
-  @UseInterceptors(FileInterceptor('file', { dest: './tmp' }))
+  @UseInterceptors(FileInterceptor('file', { dest: cmmConf.defaultUploadTmpDir }))
   public async uploadFile(
     @Body() body: { account: string },
     @UploadedFile() uploadedFile: Express.Multer.File

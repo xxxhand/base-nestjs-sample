@@ -2,6 +2,7 @@ export interface IConfig {
   port: number;
   domain: string;
   defaultApiRouterPrefix: string;
+  defaultUploadTmpDir: string;
   defaultMongo: {
     uri: string;
     minPoolSize: number;

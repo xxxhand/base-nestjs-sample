@@ -13,4 +13,5 @@ export const cmmConf: IConfig = {
   port: Number.parseInt(process.env.PORT),
   domain: process.env.DOMAIN,
   defaultApiRouterPrefix: process.env.DEFAULT_API_ROUTER_PREFIX,
+  defaultUploadTmpDir: process.env.DEFAULT_UPLOAD_TEMP_DIR,
 };
