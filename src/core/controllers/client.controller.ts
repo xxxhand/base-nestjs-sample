@@ -1,5 +1,6 @@
 import { CustomResult } from '@xxxhand/app-common';
-import { Post, Body, Controller } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Post, Body, Controller, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CommonService, ErrException } from '@myapp/common';
 import { errConstants } from '../domain/err-codes/err.const';
 import { ExampleEntity } from '../domain/entities/example.entity';
@@ -14,10 +15,10 @@ export class ClientController {
   constructor(
     private readonly cmmService: CommonService,
     private readonly repo: ExampleRepository,
-  ) {}
+  ) { }
 
   @Post()
-  public async createClient(@Body() body: CreateExampleRequest): Promise<CustomResult> {
+  public async createExample(@Body() body: CreateExampleRequest): Promise<CustomResult> {
     let currExample = await this.repo.findOneByName(body.name);
     if (currExample) {
       throw ErrException.newFromCodeName(errConstants.ERR_CLIENT_DUPLICATED);
@@ -28,5 +29,22 @@ export class ClientController {
     currExample = await this.repo.save(currExample);
 
     return this.cmmService.newResultInstance().withResult(currExample.id);
+  }
+
+  @Post('/upload')
+  @UseInterceptors(FileInterceptor('file', { dest: './tmp' }))
+  public async uploadFile(
+    @Body() body: { account: string },
+    @UploadedFile() uploadedFile: Express.Multer.File
+  ): Promise<CustomResult> {
+
+    return this.cmmService
+      .newResultInstance<{ account: string, file: string }>()
+      .withResult(
+        {
+          account: body.account,
+          file: uploadedFile.originalname
+        }
+      );
   }
 }

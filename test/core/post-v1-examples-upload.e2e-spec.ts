@@ -3,10 +3,11 @@ import * as path from 'path';
 import * as superTest from 'supertest';
 import { AppHelper } from '../__helpers__/app.helper';
 
-describe.skip(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload spec`, () => {
+describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload spec`, () => {
     const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload`;
     let agent: superTest.SuperAgentTest;
-    const testFile = path.join(__dirname, '..', '__helpers/temp-files/test-file-2.jpeg');
+    const testFile = path.join(__dirname, '/upload-files/test-file-2.jpeg');
+    console.log(testFile)
     beforeAll(async () => {
         agent = await AppHelper.getAgent();
     });
@@ -18,7 +19,7 @@ describe.skip(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload 
             const res = await agent.post(endpoint)
                 .field('account', 'xxxhand')
                 .attach('file', testFile);
-            
+
             expect(res.status).toBe(201);
             expect(res.body.code).toBe(0);
             expect(res.body.message).toBe('');

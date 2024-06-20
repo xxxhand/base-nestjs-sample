@@ -27,8 +27,8 @@ export class CommonService {
   }
 
   /** To build new one CustomResult object within trace id */
-  public newResultInstance(): CustomResult {
-    return new CustomResult().withTraceId(this.alsProvider.store);
+  public newResultInstance<T = any>(): CustomResult<T> {
+    return new CustomResult<T>().withTraceId(this.alsProvider.store);
   }
   /** To release all used resouces, usually using on application shutdown */
   public async releaseResources(): Promise<void> {

@@ -4,8 +4,8 @@ import { Module, BeforeApplicationShutdown, MiddlewareConsumer, NestModule, OnAp
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { CoreModule } from './core/core.module';
-import { AppExceptionFilter } from './middlewares/app-exception.filter';
-import { AppMiddleware } from './middlewares/app.middleware';
+import { AppExceptionFilter } from './app-components/app-exception.filter';
+import { AppMiddleware } from './app-components/app.middleware';
 @Module({
   imports: [CommonModule, CoreModule],
   controllers: [AppController],
