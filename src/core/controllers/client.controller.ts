@@ -1,7 +1,6 @@
 import { CustomResult } from '@xxxhand/app-common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Post, Body, Controller, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { CommonService, ErrException, cmmConf, SingleUploadFileInterceptor } from '@myapp/common';
+import { Post, Body, Controller, UploadedFile } from '@nestjs/common';
+import { CommonService, ErrException, SingleUploadFileInterceptor } from '@myapp/common';
 import { errConstants } from '../domain/err-codes/err.const';
 import { ExampleEntity } from '../domain/entities/example.entity';
 import { ExampleRepository } from '../infra/repositories/example.repository';
