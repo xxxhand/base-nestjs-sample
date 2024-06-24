@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ErrException } from '@myapp/common';
+import { ErrException, CommonService } from '@myapp/common';
 import { CustomResult } from '@xxxhand/app-common';
 import { ExceptionFilter, Catch, ArgumentsHost, Logger } from '@nestjs/common';
 
@@ -7,6 +7,8 @@ import * as appConstants from '@myapp/common';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
+  constructor(private readonly cmmService: CommonService) { }
+
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const req = ctx.getRequest<Request>();
@@ -18,8 +20,7 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     if (res.headersSent) return;
     res.status(err.getStatus()).json(
-      new CustomResult()
-        .withTraceId(<string>res.getHeader(appConstants.X_TRACE_ID))
+      this.cmmService.newResultInstance()
         .withCode(err.getCode())
         .withMessage(err.getMessage()),
     );
