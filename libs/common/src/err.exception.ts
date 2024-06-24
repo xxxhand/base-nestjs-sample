@@ -20,7 +20,7 @@ export class ErrException extends HttpException {
   }
 
   public getMessage(): string {
-    return this._message;
+    return this.message;
   }
 
   public setMessage(message: string): void {
@@ -37,7 +37,7 @@ export class ErrException extends HttpException {
 
   public format(): void {
     if (CustomValidator.nonEmptyArray(this.msgArgs)) {
-      this.message = util.format(this.message, ...this.msgArgs);
+      this.message = util.format(this._message, ...this.msgArgs);
     }
   }
 
@@ -105,6 +105,9 @@ export class ErrException extends HttpException {
             unSupportedMsg = cErr['message'].shift();
           }
           exp = ErrException.newFromCodeName(unSupportedMsg);
+          if (('msgArgs' in cErr) && CustomValidator.nonEmptyArray(<any>cErr.msgArgs)) {
+            exp.setMsgArgs(<(string | number)[]>cErr.msgArgs)
+          }
         } catch (error) {
           exp = ErrException.newFromCodeName(exception.message);
           break;
