@@ -20,7 +20,7 @@ export class ExampleRepository {
       };
       const col = this.defMongooseClient.getModel(modelNames.EXAMPLE);
       doc = (await col.create(doc)) as IExampleDocument;
-      entity.id = doc.id;
+      entity.id = doc._id.toHexString();
       return entity;
     }
 
@@ -34,7 +34,11 @@ export class ExampleRepository {
     const col = this.defMongooseClient.getModel(modelNames.EXAMPLE);
     const q = { name };
     const doc = (await col.findOne(q).lean()) as IExampleDocument;
-
-    return plainToInstance(ExampleEntity, doc);
+    if (!doc) {
+      return undefined;
+    }
+    const ent = plainToInstance(ExampleEntity, doc);
+    ent.id = doc._id.toHexString();
+    return ent;
   }
 }

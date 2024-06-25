@@ -105,7 +105,7 @@ export class ErrException extends HttpException {
             unSupportedMsg = cErr['message'].shift();
           }
           exp = ErrException.newFromCodeName(unSupportedMsg);
-          if (('msgArgs' in cErr) && CustomValidator.nonEmptyArray(<any>cErr.msgArgs)) {
+          if (('msgArgs' in cErr) && CustomValidator.nonEmptyArray(<any>cErr['msgArgs'])) {
             exp.setMsgArgs(<(string | number)[]>cErr.msgArgs)
           }
         } catch (error) {
