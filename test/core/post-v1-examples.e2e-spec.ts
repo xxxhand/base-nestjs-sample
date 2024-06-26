@@ -12,7 +12,8 @@ interface IBody {
 describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples spec`, () => {
   const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples`;
   let agent: superTest.SuperAgentTest;
-  const db = new MongoHelper();
+  const dbHelper = new MongoHelper('example');
+  const db = dbHelper.mongo;
   const col = 'Examples';
   const defaultBody: IBody = {
     name: 'iLearning',
@@ -24,7 +25,7 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples spec`, () =>
   });
   afterAll(async () => {
     await AppHelper.closeAgent();
-    await db.clear([col]);
+    await dbHelper.clear();
     db.close();
   });
   describe('Required fields', () => {

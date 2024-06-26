@@ -1,21 +1,29 @@
+import { cmmConf } from '@myapp/common';
 import { CustomMongoClient } from '@xxxhand/app-common';
 
-export class MongoHelper extends CustomMongoClient {
-  constructor() {
-    super(process.env.DEFAULT_MONGO_URI, {
+export class MongoHelper {
+  private _mongo: CustomMongoClient;
+  constructor(postFix: string) {
+    cmmConf.defaultMongo.dbName = `${process.env.DEFAULT_MONGO_DB_NAME}_${postFix}`;
+    cmmConf.defaultMongo.uri = `${process.env.DEFAULT_MONGO_URI}_${postFix}`;
+
+
+    this._mongo = new CustomMongoClient(cmmConf.defaultMongo.uri, {
       minPoolSize: Number.parseInt(process.env.DEFAULT_MONGO_MIN_POOL),
       maxPoolSize: Number.parseInt(process.env.DEFAULT_MONGO_MAX_POOL),
       user: process.env.DEFAULT_MONGO_USER,
       pass: process.env.DEFAULT_MONGO_PASS,
-      db: process.env.DEFAULT_MONGO_DB_NAME,
+      db: cmmConf.defaultMongo.dbName,
       directConnect: true,
       connectTimeoutMS: Number.parseInt(process.env.DEFAULT_MONGO_CONN_TIMEOUT),
     });
   }
 
-  public async clear(cols: string[]): Promise<void> {
-    for (const col of cols) {
-      await this.getCollection(col).deleteMany({});
-    }
+  public get mongo(): CustomMongoClient {
+    return this._mongo;
+  }
+
+  public async clear(): Promise<void> {
+    this._mongo.client.db(cmmConf.defaultMongo.dbName).dropDatabase();
   }
 }
