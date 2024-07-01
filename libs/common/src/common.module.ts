@@ -4,6 +4,8 @@ import { TMongooseClient, CustomDefinition } from '@xxxhand/app-common';
 import { cmmConf } from './common.config';
 import { CommonService } from './common.service';
 import { DEFAULT_MONGO, CMM_CFG } from './common.const';
+import { errCodes } from './err.code';
+import { ErrException } from './err.exception';
 import { IConfig } from './interfaces/config.interface';
 import { DefaultMongoose } from './clients/default.mongoose';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
@@ -42,5 +44,6 @@ import { AsyncLocalStorageProvider } from './clients/async-local-storage.provide
 export class CommonModule implements OnModuleInit {
   onModuleInit() {
     // Initial all error codes
+    ErrException.addCodes(errCodes);
   }
 }

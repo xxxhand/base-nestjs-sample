@@ -2,7 +2,6 @@ import { TMongooseClient } from '@xxxhand/app-common';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ErrException, DEFAULT_MONGO } from '@myapp/common';
 
-import { errCodes } from './domain/err-codes/err.codes';
 import { ClientController } from './controllers/client.controller';
 import { ExampleRepository } from './infra/repositories/example.repository';
 import { loadModelsIntoDefaultContainer } from './infra/models/models.definition';
@@ -25,6 +24,5 @@ import { loadModelsIntoDefaultContainer } from './infra/models/models.definition
 export class CoreModule implements OnModuleInit {
   onModuleInit() {
     // Register all error codes
-    ErrException.addCodes(errCodes);
   }
 }
