@@ -25,7 +25,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@typegoose/typegoose": "^12.5.0",
     "@types/multer": "^1.4.11",
-    "@xxxhand/app-common": "^0.0.17",
+    "@xxxhand/app-common": "^0.0.18",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
