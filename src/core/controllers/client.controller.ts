@@ -1,7 +1,6 @@
 import { CustomResult } from '@xxxhand/app-common';
 import { Post, Body, Controller, UploadedFile } from '@nestjs/common';
-import { CommonService, ErrException, SingleUploadFileInterceptor } from '@myapp/common';
-import { errConstants } from '../domain/err-codes/err.const';
+import { CommonService, ErrException, SingleUploadFileInterceptor, errConstants } from '@myapp/common';
 import { ExampleEntity } from '../domain/entities/example.entity';
 import { ExampleRepository } from '../infra/repositories/example.repository';
 import { CreateExampleRequest } from '../domain/value-objects/create-example.request';

@@ -1,5 +1,5 @@
 import * as cv from 'class-validator';
-import { errConstants } from '../err-codes/err.const';
+import { errConstants } from '@myapp/common';
 
 export class CreateExampleRequest {
   @cv.IsNotEmpty({ message: errConstants.ERR_CLIENT_NAME_EMPTY })
