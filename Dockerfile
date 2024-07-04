@@ -14,24 +14,29 @@
 
 FROM node:iron-slim as builder
 ENV NODE_ENV build
-USER node
+# USER node
 WORKDIR /home/app
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
-COPY --chown=node:node . .
+# COPY --chown=node:node . .
+COPY . .
 RUN yarn build
 
 ## ----------------------------Copy necessary only
 
 FROM node:iron-slim
 ENV NODE_ENV production
-USER node
+# USER node
 WORKDIR /home/app
 
-COPY --from=builder --chown=node:node /home/app/package*.json ./
-COPY --from=builder --chown=node:node /home/app/node_modules/ ./node_modules/
-COPY --from=builder --chown=node:node /home/app/dist/ ./dist/
-COPY --from=builder --chown=node:node /home/app/credentials/ ./credentials/
+# COPY --from=builder --chown=node:node /home/app/package*.json ./
+# COPY --from=builder --chown=node:node /home/app/node_modules/ ./node_modules/
+# COPY --from=builder --chown=node:node /home/app/dist/ ./dist/
+# COPY --from=builder --chown=node:node /home/app/credentials/ ./credentials/
+COPY --from=builder /home/app/package*.json ./
+COPY --from=builder /home/app/node_modules/ ./node_modules/
+COPY --from=builder /home/app/dist/ ./dist/
+COPY --from=builder /home/app/credentials/ ./credentials/
 
 CMD [ "yarn", "start:prod" ]

@@ -76,6 +76,7 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
+    "globalSetup": "<rootDir>/jest-global-setup.ts",
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [

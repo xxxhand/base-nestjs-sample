@@ -19,5 +19,5 @@ Dockerfile
 README.md
 .eslintrc.js
 .prettierrc
-docker-compose.yml
-run-compose.sh
+docker-compose*.yml
+run-compose*.sh
