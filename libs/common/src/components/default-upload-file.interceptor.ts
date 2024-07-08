@@ -5,11 +5,9 @@ import { FileInterceptor, MulterModuleOptions } from '@nestjs/platform-express';
 
 export interface ISingleUploadOptions {
   field: string;
-  maxSize: number,
-  acceptMimeTypes: string[]
+  maxSize: number;
+  acceptMimeTypes: string[];
 }
-
-
 
 export const SingleUploadFileInterceptor = (opt?: ISingleUploadOptions) => {
   if (!opt) {
@@ -22,8 +20,8 @@ export const SingleUploadFileInterceptor = (opt?: ISingleUploadOptions) => {
   const currOpt: MulterModuleOptions = {
     dest: cmmConf.defaultUploadTmpDir,
     limits: {
-      fileSize: cmmConf.defaultUploadMaxSize
-    }
+      fileSize: cmmConf.defaultUploadMaxSize,
+    },
   };
   currOpt.limits.fileSize = opt.maxSize;
   if (CustomValidator.nonEmptyArray(opt.acceptMimeTypes)) {

@@ -9,11 +9,11 @@ import { CreateExampleRequest } from '../domain/value-objects/create-example.req
   path: 'examples',
   version: '1',
 })
-export class ClientController {
+export class ExampleController {
   constructor(
     private readonly cmmService: CommonService,
     private readonly repo: ExampleRepository,
-  ) { }
+  ) {}
 
   @Post()
   public async createExample(@Body() body: CreateExampleRequest): Promise<CustomResult> {
@@ -31,18 +31,10 @@ export class ClientController {
 
   @Post('/upload')
   @SingleUploadFileInterceptor()
-  public async uploadFile(
-    @Body() body: { account: string },
-    @UploadedFile() uploadedFile: Express.Multer.File
-  ): Promise<CustomResult> {
-
-    return this.cmmService
-      .newResultInstance<{ account: string, file: string }>()
-      .withResult(
-        {
-          account: body.account,
-          file: uploadedFile.originalname
-        }
-      );
+  public async uploadFile(@Body() body: { account: string }, @UploadedFile() uploadedFile: Express.Multer.File): Promise<CustomResult> {
+    return this.cmmService.newResultInstance<{ account: string; file: string }>().withResult({
+      account: body.account,
+      file: uploadedFile.originalname,
+    });
   }
 }
