@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { CoreModule } from './core/core.module';
 import { AppExceptionFilter } from './app-components/app-exception.filter';
-import { AppMiddleware } from './app-components/app.middleware';
+import { AppTracerMiddleware } from './app-components/app-tracer.middleware';
 @Module({
   imports: [CommonModule, CoreModule],
   controllers: [AppController],
@@ -21,7 +21,7 @@ export class AppModule implements NestModule, OnApplicationBootstrap, BeforeAppl
   constructor(private readonly cmmService: CommonService) {}
 
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AppMiddleware).forRoutes('*');
+    consumer.apply(AppTracerMiddleware).forRoutes('*');
   }
 
   async onApplicationBootstrap() {}

@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { X_TRACE_ID, CommonService } from '@myapp/common';
 
 @Injectable()
-export class AppMiddleware implements NestMiddleware {
+export class AppTracerMiddleware implements NestMiddleware {
   constructor(private readonly cmmService: CommonService) {}
 
   use(req: Request, res: Response, next: NextFunction) {

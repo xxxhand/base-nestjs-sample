@@ -7,7 +7,6 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload spec`
   const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload`;
   let agent: superTest.SuperAgentTest;
   const testFile = path.join(__dirname, '/upload-files/test-file-2.jpeg');
-  console.log(testFile);
   beforeAll(async () => {
     agent = await AppHelper.getAgent();
   });

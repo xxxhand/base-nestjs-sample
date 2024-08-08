@@ -6,6 +6,7 @@ export class ErrException extends HttpException {
   private code: number = 0;
   private msgArgs: Array<string | number> = [];
   private _message: string = '';
+  private _result?: any = undefined;
 
   constructor(message: string, httpStatus: number) {
     super(message, httpStatus);
@@ -25,6 +26,7 @@ export class ErrException extends HttpException {
 
   public setMessage(message: string): void {
     this._message = message;
+    super.message = message;
   }
 
   public getMsgArgs(): Array<string | number> {
@@ -38,6 +40,16 @@ export class ErrException extends HttpException {
   public format(): void {
     if (CustomValidator.nonEmptyArray(this.msgArgs)) {
       this.message = util.format(this._message, ...this.msgArgs);
+    }
+  }
+
+  public getResult(): any {
+    return this._result;
+  }
+
+  public addExtraResult(result?: any): void {
+    if (result) {
+      this._result = result;
     }
   }
 
@@ -96,7 +108,6 @@ export class ErrException extends HttpException {
           }
           if (!('message' in cErr)) {
             exp = ErrException.newFromCodeName(unSupportedMsg);
-            console.warn(cErr);
             break;
           }
           if (typeof cErr['message'] === 'string') {
@@ -105,7 +116,7 @@ export class ErrException extends HttpException {
             unSupportedMsg = cErr['message'].shift();
           }
           exp = ErrException.newFromCodeName(unSupportedMsg);
-          if ('msgArgs' in cErr && CustomValidator.nonEmptyArray(<any>cErr['msgArgs'])) {
+          if ('msgArgs' in cErr && CustomValidator.nonEmptyArray(<any>cErr.msgArgs)) {
             exp.setMsgArgs(<(string | number)[]>cErr.msgArgs);
           }
         } catch (error) {

@@ -13,6 +13,7 @@ export class AppExceptionFilter implements ExceptionFilter {
     const res = ctx.getResponse<Response>();
 
     const err = ErrException.newFromException(exception);
+    err.format();
     Logger.warn(`${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`);
     Logger.warn(err.stack);
 

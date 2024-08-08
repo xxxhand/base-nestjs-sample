@@ -1,12 +1,12 @@
 import { Module, Global, OnModuleInit } from '@nestjs/common';
 import { TMongooseClient, CustomDefinition } from '@xxxhand/app-common';
 
-import { cmmConf } from './common.config';
-import { CommonService } from './common.service';
-import { DEFAULT_MONGO, CMM_CFG } from './common.const';
 import { errCodes } from './err.code';
+import { cmmConf } from './common.config';
 import { ErrException } from './err.exception';
+import { CommonService } from './common.service';
 import { IConfig } from './interfaces/config.interface';
+import { DEFAULT_MONGO, CMM_CFG } from './common.const';
 import { DefaultMongoose } from './clients/default.mongoose';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
 

@@ -1,3 +1,4 @@
+import * as fs from 'fs-extra';
 import { CustomResult } from '@xxxhand/app-common';
 import { Post, Body, Controller, UploadedFile } from '@nestjs/common';
 import { CommonService, ErrException, SingleUploadFileInterceptor, errConstants } from '@myapp/common';
@@ -32,6 +33,7 @@ export class ExampleController {
   @Post('/upload')
   @SingleUploadFileInterceptor()
   public async uploadFile(@Body() body: { account: string }, @UploadedFile() uploadedFile: Express.Multer.File): Promise<CustomResult> {
+    fs.unlink(uploadedFile.path);
     return this.cmmService.newResultInstance<{ account: string; file: string }>().withResult({
       account: body.account,
       file: uploadedFile.originalname,
