@@ -21,6 +21,8 @@ services:
       dockerfile: Dockerfile
     image: backend:${IMAGE_TAG}
     container_name: backend
+    volumes:
+      - ~/Documents/docker-data/backend/log:/var/log/backend/log
     depends_on:
       - mongodb
     env_file:

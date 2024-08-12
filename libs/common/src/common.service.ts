@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, LoggerService } from '@nestjs/common';
 import { TMongooseClient, CustomResult } from '@xxxhand/app-common';
 import { CMM_CFG, DEFAULT_MONGO } from './common.const';
 import { IConfig } from './interfaces/config.interface';
@@ -23,7 +23,7 @@ export class CommonService {
   }
 
   /** Get default logger with context name */
-  public getDefaultLogger(context: string): DefaultLoggerService {
+  public getDefaultLogger(context: string): LoggerService {
     return new DefaultLoggerService().useContext(context).useStorageProvider(this.alsProvider).initialFlieTransport(this.cmmConf.defaultLoggerPath);
   }
 

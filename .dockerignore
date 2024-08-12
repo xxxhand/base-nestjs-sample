@@ -21,3 +21,5 @@ README.md
 .prettierrc
 docker-compose*.yml
 run-compose*.sh
+log
+logs
