@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { TMongooseClient, CustomResult } from '@xxxhand/app-common';
 import { CMM_CFG, DEFAULT_MONGO } from './common.const';
 import { IConfig } from './interfaces/config.interface';
+import { DefaultLoggerService } from './components/default-logger.service';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
 @Injectable()
 export class CommonService {
@@ -19,6 +20,11 @@ export class CommonService {
   /** Get default mongoose client */
   public getDefaultMongooseClient(): TMongooseClient {
     return this.defMongoClient;
+  }
+
+  /** Get default logger with context name */
+  public getDefaultLogger(context: string): DefaultLoggerService {
+    return new DefaultLoggerService().useContext(context).useStorageProvider(this.alsProvider).initialFlieTransport(this.cmmConf.defaultLoggerPath);
   }
 
   /** Get current asyncLocalStorage */

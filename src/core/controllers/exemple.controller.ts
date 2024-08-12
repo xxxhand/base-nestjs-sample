@@ -1,23 +1,28 @@
 import * as fs from 'fs-extra';
 import { CustomResult } from '@xxxhand/app-common';
-import { Post, Body, Controller, UploadedFile } from '@nestjs/common';
-import { CommonService, ErrException, SingleUploadFileInterceptor, errConstants } from '@myapp/common';
+import { Post, Body, Controller, UploadedFile, LoggerService } from '@nestjs/common';
+import { CommonService, ErrException, errConstants } from '@myapp/common';
 import { ExampleEntity } from '../domain/entities/example.entity';
 import { ExampleRepository } from '../infra/repositories/example.repository';
 import { CreateExampleRequest } from '../domain/value-objects/create-example.request';
+import { SingleUploadFileInterceptor } from '../../app-components/default-upload-file.interceptor';
 
 @Controller({
   path: 'examples',
   version: '1',
 })
 export class ExampleController {
+  private readonly _Logger: LoggerService;
   constructor(
     private readonly cmmService: CommonService,
     private readonly repo: ExampleRepository,
-  ) {}
+  ) {
+    this._Logger = this.cmmService.getDefaultLogger(ExampleController.name);
+  }
 
   @Post()
   public async createExample(@Body() body: CreateExampleRequest): Promise<CustomResult> {
+    this._Logger.log(`Create client with name: ${body.name}`);
     let currExample = await this.repo.findOneByName(body.name);
     if (currExample) {
       throw ErrException.newFromCodeName(errConstants.ERR_CLIENT_DUPLICATED);

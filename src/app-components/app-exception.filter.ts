@@ -1,11 +1,14 @@
 import * as fs from 'fs-extra';
 import { Request, Response } from 'express';
 import { ErrException, CommonService } from '@myapp/common';
-import { ExceptionFilter, Catch, ArgumentsHost, Logger } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, LoggerService } from '@nestjs/common';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
-  constructor(private readonly cmmService: CommonService) {}
+  private readonly _Logger: LoggerService;
+  constructor(private readonly cmmService: CommonService) {
+    this._Logger = this.cmmService.getDefaultLogger(AppExceptionFilter.name);
+  }
 
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -14,13 +17,13 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     const err = ErrException.newFromException(exception);
     err.format();
-    Logger.warn(`${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`);
-    Logger.warn(err.stack);
+    this._Logger.warn(`${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`);
+    // this._Logger.warn(err.stack);
 
     if (res.headersSent) return;
     res.status(err.getStatus()).json(this.cmmService.newResultInstance().withCode(err.getCode()).withMessage(err.getMessage()));
     // Delete uploaded files
-    const tasks = []
+    const tasks = [];
     if (req.file) {
       tasks.push(fs.unlink(req.file.path));
     }
@@ -31,6 +34,6 @@ export class AppExceptionFilter implements ExceptionFilter {
         Object.keys(req.files).forEach((k: string) => (req.files[k] as Express.Multer.File[]).forEach((x: Express.Multer.File) => tasks.push(fs.unlink(x.path))));
       }
     }
-    Promise.all(tasks).catch((ex) => Logger.warn(ex));    
+    Promise.all(tasks).catch((ex) => this._Logger.warn(ex));
   }
 }

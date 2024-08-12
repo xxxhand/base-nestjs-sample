@@ -15,4 +15,5 @@ export const cmmConf: IConfig = {
   defaultApiRouterPrefix: process.env.DEFAULT_API_ROUTER_PREFIX,
   defaultUploadTmpDir: process.env.DEFAULT_UPLOAD_TEMP_DIR,
   defaultUploadMaxSize: Number.parseInt(process.env.DEFAULT_UPLOAD_MAX_SIZE),
+  defaultLoggerPath: process.env.DEFAULT_LOGGER_PATH,
 };

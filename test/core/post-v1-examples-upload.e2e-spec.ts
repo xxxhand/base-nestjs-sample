@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import * as path from 'path';
 import * as superTest from 'supertest';
 import { AppHelper } from '../__helpers__/app.helper';
