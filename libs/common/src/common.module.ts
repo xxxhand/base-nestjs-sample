@@ -1,13 +1,14 @@
 import { Module, Global, OnModuleInit } from '@nestjs/common';
-import { TMongooseClient, CustomDefinition } from '@xxxhand/app-common';
+import { TMongooseClient, CustomDefinition, TEasyTranslator } from '@xxxhand/app-common';
 
 import { errCodes } from './err.code';
 import { cmmConf } from './common.config';
 import { ErrException } from './err.exception';
 import { CommonService } from './common.service';
 import { IConfig } from './interfaces/config.interface';
-import { DEFAULT_MONGO, CMM_CFG } from './common.const';
+import { DEFAULT_MONGO, CMM_CFG, DEFAULT_TRANSLATE } from './common.const';
 import { DefaultMongoose } from './clients/default.mongoose';
+import { EasyTranslateService } from './components/easy-translate.service';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
 
 @Global()
@@ -29,11 +30,19 @@ import { AsyncLocalStorageProvider } from './clients/async-local-storage.provide
           db: conf.defaultMongo.dbName,
           user: conf.defaultMongo.user,
           pass: conf.defaultMongo.password,
-          directConnect: true,
         };
         const client = new DefaultMongoose(uri, opt);
         await client.tryConnect();
         return client;
+      },
+      inject: [CMM_CFG],
+    },
+    {
+      provide: DEFAULT_TRANSLATE,
+      useFactory: async (conf: IConfig): Promise<TEasyTranslator> => {
+        const tr = new EasyTranslateService(conf.localesPath, conf.fallbackLocale);
+        await tr.initial();
+        return tr;
       },
       inject: [CMM_CFG],
     },

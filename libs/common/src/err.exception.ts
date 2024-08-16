@@ -6,11 +6,14 @@ export class ErrException extends HttpException {
   private code: number = 0;
   private msgArgs: Array<string | number> = [];
   private _message: string = '';
+  private _codeName: string = '';
   private _result?: any = undefined;
+  private _httpStatus: number = 400;
 
   constructor(message: string, httpStatus: number) {
     super(message, httpStatus);
     this._message = message;
+    this._httpStatus = httpStatus;
   }
 
   public getCode(): number {
@@ -18,6 +21,14 @@ export class ErrException extends HttpException {
   }
   public setCode(code: number): void {
     this.code = code;
+  }
+
+  public getCodeName(): string {
+    return this._codeName;
+  }
+
+  public setCodeName(name: string): void {
+    this._codeName = name;
   }
 
   public getMessage(): string {
@@ -53,6 +64,10 @@ export class ErrException extends HttpException {
     }
   }
 
+  public is5xxException(): boolean {
+    return this._httpStatus >= 499;
+  }
+
   public static addCodes(codes: CustomDefinition.ICodeStruct[]): void {
     CustomError.addCodes(codes);
   }
@@ -62,6 +77,7 @@ export class ErrException extends HttpException {
     const exp = new ErrException(oCode.message, oCode.httpStatus);
     exp.setCode(oCode.code);
     exp.setMessage(oCode.message);
+    exp.setCodeName(oCode.codeName);
     if (CustomValidator.nonEmptyArray(msgArgs)) {
       exp.setMsgArgs(msgArgs);
     }
@@ -89,6 +105,7 @@ export class ErrException extends HttpException {
         exp = new ErrException(exception.message, exception.httpStatus);
         exp.setCode(exception.code);
         exp.setMessage(exception.message);
+        exp.setCodeName(exception.codeName);
         if (CustomValidator.nonEmptyArray(exception.msgArgs)) {
           exp.setMsgArgs(exception.msgArgs);
         }

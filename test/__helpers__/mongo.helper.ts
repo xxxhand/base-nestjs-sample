@@ -13,7 +13,6 @@ export class MongoHelper {
       user: process.env.DEFAULT_MONGO_USER,
       pass: process.env.DEFAULT_MONGO_PASS,
       db: cmmConf.defaultMongo.dbName,
-      directConnect: true,
       connectTimeoutMS: Number.parseInt(process.env.DEFAULT_MONGO_CONN_TIMEOUT),
     });
   }

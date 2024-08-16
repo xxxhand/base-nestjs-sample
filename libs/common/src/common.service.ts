@@ -1,6 +1,6 @@
 import { Injectable, Inject, LoggerService } from '@nestjs/common';
-import { TMongooseClient, CustomResult } from '@xxxhand/app-common';
-import { CMM_CFG, DEFAULT_MONGO } from './common.const';
+import { TMongooseClient, CustomResult, TEasyTranslator } from '@xxxhand/app-common';
+import { CMM_CFG, DEFAULT_MONGO, DEFAULT_TRANSLATE } from './common.const';
 import { IConfig } from './interfaces/config.interface';
 import { DefaultLoggerService } from './components/default-logger.service';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
@@ -9,6 +9,7 @@ export class CommonService {
   constructor(
     @Inject(CMM_CFG) private readonly cmmConf: IConfig,
     @Inject(DEFAULT_MONGO) private readonly defMongoClient: TMongooseClient,
+    @Inject(DEFAULT_TRANSLATE) private readonly defTrans: TEasyTranslator,
     private readonly alsProvider: AsyncLocalStorageProvider,
   ) {}
 
@@ -30,6 +31,11 @@ export class CommonService {
   /** Get current asyncLocalStorage */
   public getLocalStorage(): AsyncLocalStorageProvider {
     return this.alsProvider;
+  }
+
+  /** For multi langs translation */
+  public t(key: string, locale?: string): string {
+    return this.defTrans.t(key, locale);
   }
 
   /** To build new one CustomResult object within trace id */

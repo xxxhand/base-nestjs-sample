@@ -38,6 +38,15 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples spec`, () =>
       expect(res.body.code).toBe(10001);
       expect(res.body.message).toBe('Client name is empty');
     });
+    test('[10001] Parameter "name" is empty with accept-language: zh-tw', async () => {
+      const b = _.cloneDeep(defaultBody);
+      b.name = '';
+      const res = await agent.post(endpoint).set('Accept-Language', 'zh-tw').send(b);
+
+      expect(res.status).toBe(400);
+      expect(res.body.code).toBe(10001);
+      expect(res.body.message).toBe('客戶端名稱為空');
+    });
     test('[10002] Parameter "callbackUrl" is empty', async () => {
       const b = _.cloneDeep(defaultBody);
       b.callbackUrl = '';

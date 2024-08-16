@@ -16,6 +16,9 @@ export class AppExceptionFilter implements ExceptionFilter {
     const res = ctx.getResponse<Response>();
 
     const err = ErrException.newFromException(exception);
+    if (!err.is5xxException()) {
+      err.setMessage(this.cmmService.t(err.getCodeName(), req.get('Accept-Language')));
+    }
     err.format();
     this._Logger.warn(`${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`);
     // this._Logger.warn(err.stack);

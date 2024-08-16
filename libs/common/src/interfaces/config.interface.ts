@@ -5,6 +5,8 @@ export interface IConfig {
   defaultUploadTmpDir: string;
   defaultUploadMaxSize: number;
   defaultLoggerPath: string;
+  localesPath: string;
+  fallbackLocale: string;
   defaultMongo: {
     uri: string;
     minPoolSize: number;

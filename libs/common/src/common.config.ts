@@ -16,4 +16,6 @@ export const cmmConf: IConfig = {
   defaultUploadTmpDir: process.env.DEFAULT_UPLOAD_TEMP_DIR,
   defaultUploadMaxSize: Number.parseInt(process.env.DEFAULT_UPLOAD_MAX_SIZE),
   defaultLoggerPath: process.env.DEFAULT_LOGGER_PATH,
+  localesPath: process.env.LOCALES_PATH,
+  fallbackLocale: process.env.FALLBACK_LOCALE,
 };
