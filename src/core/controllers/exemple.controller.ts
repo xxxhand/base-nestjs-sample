@@ -5,7 +5,7 @@ import { CommonService, ErrException, errConstants } from '@myapp/common';
 import { ExampleEntity } from '../domain/entities/example.entity';
 import { ExampleRepository } from '../infra/repositories/example.repository';
 import { CreateExampleRequest } from '../domain/value-objects/create-example.request';
-import { SingleUploadFileInterceptor } from '../../app-components/default-upload-file.interceptor';
+import { SingleUploadFileInterceptor } from '../../app-components/single-upload-file.interceptor';
 
 @Controller({
   path: 'examples',
