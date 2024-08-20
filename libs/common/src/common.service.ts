@@ -1,5 +1,5 @@
 import { Injectable, Inject, LoggerService } from '@nestjs/common';
-import { TMongooseClient, CustomResult, TEasyTranslator } from '@xxxhand/app-common';
+import { TMongooseClient, CustomResult, TEasyTranslator, CustomUtils } from '@xxxhand/app-common';
 import { CMM_CFG, DEFAULT_MONGO, DEFAULT_TRANSLATE } from './common.const';
 import { IConfig } from './interfaces/config.interface';
 import { DefaultLoggerService } from './components/default-logger.service';
@@ -35,7 +35,7 @@ export class CommonService {
 
   /** For multi langs translation */
   public t(key: string, locale?: string): string {
-    return this.defTrans.t(key, locale);
+    return this.defTrans.t(key, CustomUtils.getLangOrDefault(locale, this.cmmConf.fallbackLocale));
   }
 
   /** To build new one CustomResult object within trace id */

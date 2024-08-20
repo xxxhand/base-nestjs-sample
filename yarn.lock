@@ -1707,10 +1707,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@xxxhand/app-common@^0.0.24":
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/@xxxhand/app-common/-/app-common-0.0.24.tgz#a6322b4dc7518156f3e692cbec76a895db208cda"
-  integrity sha512-y82wVZN1xhHIV3dq8cyHdJgjDAlk1b5GjYhZoa9LNG09ogWS+GiyqULwqZNsAF9/R4kDH7VuJZzjekX4ZS4/fg==
+"@xxxhand/app-common@^0.0.25":
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/@xxxhand/app-common/-/app-common-0.0.25.tgz#212232fb28e3571843233473496947a3c4c180a5"
+  integrity sha512-HbtOAzReoi5ldm+K/n6oKCrbzEBqhIAQG9weczNFm0TmJgbwS235vG0P+83DG30QBZu5DIqg47ZpDL+g+KEqIw==
   dependencies:
     "@azure/storage-blob" "^12.17.0"
     axios "^1.7.2"

@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import { Request, Response } from 'express';
-import { ErrException, CommonService } from '@myapp/common';
+import { ErrException, CommonService, usedHttpHeaders } from '@myapp/common';
 import { ExceptionFilter, Catch, ArgumentsHost, LoggerService } from '@nestjs/common';
 
 @Catch()
@@ -17,7 +17,7 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     const err = ErrException.newFromException(exception);
     if (!err.is5xxException()) {
-      err.setMessage(this.cmmService.t(err.getCodeName(), req.get('Accept-Language')));
+      err.setMessage(this.cmmService.t(err.getCodeName(), req.get(usedHttpHeaders.ACCEPT_LANG)));
     }
     err.format();
     this._Logger.warn(`${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`);
