@@ -16,12 +16,15 @@ export class AppExceptionFilter implements ExceptionFilter {
     const res = ctx.getResponse<Response>();
 
     const err = ErrException.newFromException(exception);
-    if (!err.is5xxException()) {
-      err.setMessage(this.cmmService.t(err.getCodeName(), req.get(usedHttpHeaders.ACCEPT_LANG)));
-    }
+    err.setMessage(this.cmmService.t(err.getCodeName(), req.get(usedHttpHeaders.ACCEPT_LANG)));
     err.format();
-    this._Logger.warn(`${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`);
-    // this._Logger.warn(err.stack);
+    const logStr = `${req.method} ${req.originalUrl} - ${err.getStatus()}(${err.getCode()})`;
+    if (err.is5xxException()) {
+      this._Logger.error(logStr);
+      this._Logger.error(err.stack);
+    } else {
+      this._Logger.warn(logStr);
+    }
 
     if (res.headersSent) return;
     res.status(err.getStatus()).json(this.cmmService.newResultInstance().withCode(err.getCode()).withMessage(err.getMessage()));

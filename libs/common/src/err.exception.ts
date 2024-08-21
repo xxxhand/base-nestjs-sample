@@ -141,6 +141,7 @@ export class ErrException extends HttpException {
           break;
         }
     }
+    exp.stack = exception.stack;
     return exp;
   }
 }
