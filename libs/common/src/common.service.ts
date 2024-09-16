@@ -1,6 +1,6 @@
 import { Injectable, Inject, LoggerService } from '@nestjs/common';
-import { TMongooseClient, CustomResult, TEasyTranslator, CustomUtils } from '@xxxhand/app-common';
-import { CMM_CFG, DEFAULT_MONGO, DEFAULT_TRANSLATE } from './common.const';
+import { TMongooseClient, CustomResult, TEasyTranslator, CustomUtils, CustomHttpClient } from '@xxxhand/app-common';
+import { CMM_CFG, DEFAULT_MONGO, DEFAULT_TRANSLATE, DEFAULT_HTTP_CLIENT } from './common.const';
 import { IConfig } from './interfaces/config.interface';
 import { DefaultLoggerService } from './components/default-logger.service';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
@@ -10,6 +10,7 @@ export class CommonService {
     @Inject(CMM_CFG) private readonly cmmConf: IConfig,
     @Inject(DEFAULT_MONGO) private readonly defMongoClient: TMongooseClient,
     @Inject(DEFAULT_TRANSLATE) private readonly defTrans: TEasyTranslator,
+    @Inject(DEFAULT_HTTP_CLIENT) private readonly defHttpClient: CustomHttpClient,
     private readonly alsProvider: AsyncLocalStorageProvider,
   ) {}
 
@@ -36,6 +37,11 @@ export class CommonService {
   /** For multi langs translation */
   public t(key: string, locale?: string): string {
     return this.defTrans.t(key, CustomUtils.getLangOrDefault(locale, this.cmmConf.fallbackLocale));
+  }
+
+  /** Get current http client */
+  public getDefaultHttpClient(): CustomHttpClient {
+    return this.defHttpClient;
   }
 
   /** To build new one CustomResult object within trace id */

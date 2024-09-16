@@ -1,6 +1,6 @@
 import * as superTest from 'supertest';
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
+import { INestApplication, InjectionToken } from '@nestjs/common';
 import { AppModule } from '../../src/app.module';
 import { runInitial } from '../../src/app.initial';
 
@@ -15,6 +15,25 @@ export class AppHelper {
       }).compile();
 
       this._app = moduleFixture.createNestApplication();
+      runInitial(this._app);
+      await this._app.init();
+      this._agent = superTest.agent(this._app.getHttpServer());
+    }
+    return this._agent;
+  }
+
+  public static async getAgentWithMockers(mockers: Map<InjectionToken, any>): Promise<superTest.SuperAgentTest> {
+    if (!this._agent) {
+      const builder: TestingModuleBuilder = await Test.createTestingModule({
+        imports: [AppModule],
+      });
+      if (mockers.size > 0) {
+        mockers.forEach((v, k) => {
+          builder.overrideProvider(k).useValue(v);
+        });
+      }
+      const mod = await builder.compile();
+      this._app = mod.createNestApplication();
       runInitial(this._app);
       await this._app.init();
       this._agent = superTest.agent(this._app.getHttpServer());

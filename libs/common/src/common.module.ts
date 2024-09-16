@@ -1,12 +1,12 @@
 import { Module, Global, OnModuleInit } from '@nestjs/common';
-import { TMongooseClient, CustomDefinition, TEasyTranslator } from '@xxxhand/app-common';
+import { TMongooseClient, CustomDefinition, TEasyTranslator, CustomHttpClient } from '@xxxhand/app-common';
 
 import { errCodes } from './err.code';
 import { cmmConf } from './common.config';
 import { ErrException } from './err.exception';
 import { CommonService } from './common.service';
 import { IConfig } from './interfaces/config.interface';
-import { DEFAULT_MONGO, CMM_CFG, DEFAULT_TRANSLATE } from './common.const';
+import { DEFAULT_MONGO, CMM_CFG, DEFAULT_TRANSLATE, DEFAULT_HTTP_CLIENT } from './common.const';
 import { DefaultMongoose } from './clients/default.mongoose';
 import { EasyTranslateService } from './components/easy-translate.service';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
@@ -46,9 +46,13 @@ import { AsyncLocalStorageProvider } from './clients/async-local-storage.provide
       },
       inject: [CMM_CFG],
     },
+    {
+      provide: DEFAULT_HTTP_CLIENT,
+      useClass: CustomHttpClient,
+    },
     AsyncLocalStorageProvider,
   ],
-  exports: [CommonService, DEFAULT_MONGO],
+  exports: [CommonService, DEFAULT_MONGO, DEFAULT_HTTP_CLIENT],
 })
 export class CommonModule implements OnModuleInit {
   onModuleInit() {

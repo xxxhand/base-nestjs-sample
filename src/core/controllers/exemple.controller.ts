@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
-import { CustomResult } from '@xxxhand/app-common';
-import { Post, Body, Controller, UploadedFile, LoggerService } from '@nestjs/common';
+import { CustomResult, CustomHttpOption } from '@xxxhand/app-common';
+import { Post, Body, Controller, UploadedFile, LoggerService, Get } from '@nestjs/common';
 import { CommonService, ErrException, errConstants } from '@myapp/common';
 import { ExampleEntity } from '../domain/entities/example.entity';
 import { ExampleRepository } from '../infra/repositories/example.repository';
@@ -43,5 +43,14 @@ export class ExampleController {
       account: body.account,
       file: uploadedFile.originalname,
     });
+  }
+
+  @Get()
+  public async tryHttp(): Promise<CustomResult> {
+    const opt = new CustomHttpOption().nonUseCustomResult().targetUrl('https://staging.ipg-services.com/api/v1');
+
+    // const call = await this.httpClient.tryGetJson(opt);
+    const call = await this.cmmService.getDefaultHttpClient().tryGetJson(opt);
+    return this.cmmService.newResultInstance().withResult(call.result);
   }
 }

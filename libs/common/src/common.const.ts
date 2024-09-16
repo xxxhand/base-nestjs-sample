@@ -1,6 +1,7 @@
-export const DEFAULT_MONGO = Symbol('DefaultMongooseClient');
-export const CMM_CFG = Symbol('CommonConfig');
-export const DEFAULT_TRANSLATE = Symbol('DefaultTranslateService');
+export const DEFAULT_MONGO = Symbol.for('DefaultMongooseClient');
+export const CMM_CFG = Symbol.for('CommonConfig');
+export const DEFAULT_TRANSLATE = Symbol.for('DefaultTranslateService');
+export const DEFAULT_HTTP_CLIENT = Symbol.for('DefaultHttpClient');
 export const X_TRACE_ID = 'x-trace-id';
 export enum usedHttpHeaders {
   X_TRACE_ID = 'x-trace-id',
