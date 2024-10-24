@@ -26,6 +26,13 @@ RUN yarn build
 ## ----------------------------Copy necessary only
 
 FROM node:iron-slim
+
+# Install logrotate
+RUN apt-get update && apt-get -y install logrotate
+RUN mkdir /var/log/backend
+COPY logrotate.conf /etc/logrotate.d/backend
+
+
 ENV NODE_ENV production
 # USER node
 WORKDIR /home/app

@@ -1,4 +1,5 @@
 import { pino } from 'pino';
+import { FileTransport } from './file.transport';
 import { LoggerService, LogLevel } from '@nestjs/common';
 import { AsyncLocalStorageProvider } from '../clients/async-local-storage.provider';
 
@@ -19,42 +20,27 @@ export class DefaultLoggerService implements LoggerService {
   }
 
   public initialFlieTransport(filePath: string): DefaultLoggerService {
-    this._logger = pino({
-      timestamp: () => pino.stdTimeFunctions.isoTime(),
-      base: { pid: process.pid, context: this._context }, // 移除 hostname，只保留 pid
-      transport: {
-        targets: [
-          {
-            target: 'pino/file',
-            options: {
-              destination: filePath,
-              mkdir: true,
-            },
-            level: this._DEF_LEVEL,
-          },
-        ],
-      },
-    });
+    this._logger = FileTransport.getInstance(filePath).logger;
     return this;
   }
 
   log(message: any, ...optionalParams: any[]) {
-    this._logger.info({ traceId: this._storageProvider.store, ...optionalParams }, message);
+    this._logger.info({ traceId: this._storageProvider.store, context: this._context, ...optionalParams }, message);
   }
   error(message: any, ...optionalParams: any[]) {
-    this._logger.error({ traceId: this._storageProvider.store, ...optionalParams }, message);
+    this._logger.error({ traceId: this._storageProvider.store, context: this._context, ...optionalParams }, message);
   }
   warn(message: any, ...optionalParams: any[]) {
-    this._logger.warn({ traceId: this._storageProvider.store, ...optionalParams }, message);
+    this._logger.warn({ traceId: this._storageProvider.store, context: this._context, ...optionalParams }, message);
   }
   debug?(message: any, ...optionalParams: any[]) {
-    this._logger.debug({ traceId: this._storageProvider.store, ...optionalParams }, message);
+    this._logger.debug({ traceId: this._storageProvider.store, context: this._context, ...optionalParams }, message);
   }
   verbose?(message: any, ...optionalParams: any[]) {
-    this._logger.trace({ traceId: this._storageProvider.store, ...optionalParams }, message);
+    this._logger.trace({ traceId: this._storageProvider.store, context: this._context, ...optionalParams }, message);
   }
   fatal?(message: any, ...optionalParams: any[]) {
-    this._logger.fatal({ traceId: this._storageProvider.store, ...optionalParams }, message);
+    this._logger.fatal({ traceId: this._storageProvider.store, context: this._context, ...optionalParams }, message);
   }
   setLogLevels?(levels: LogLevel[]) {
     const pinoLevels = levels.map((level) => {
