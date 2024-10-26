@@ -15,5 +15,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   runInitial(app);
   await app.listen(cmmConf.port);
+  console.log(`Server on port ${cmmConf.port.toString()}`);
 }
 bootstrap();
+process.on('warning', (e) => console.warn(e));
+process.on('uncaughtException', (e) => console.error(e));

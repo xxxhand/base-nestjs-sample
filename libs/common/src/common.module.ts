@@ -32,7 +32,7 @@ import { AsyncLocalStorageProvider } from './clients/async-local-storage.provide
           pass: conf.defaultMongo.password,
         };
         const client = new DefaultMongoose(uri, opt);
-        await client.tryConnect();
+        client.tryConnect().catch((ex) => console.error(ex));
         return client;
       },
       inject: [CMM_CFG],

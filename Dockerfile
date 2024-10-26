@@ -37,10 +37,6 @@ ENV NODE_ENV production
 # USER node
 WORKDIR /home/app
 
-# COPY --from=builder --chown=node:node /home/app/package*.json ./
-# COPY --from=builder --chown=node:node /home/app/node_modules/ ./node_modules/
-# COPY --from=builder --chown=node:node /home/app/dist/ ./dist/
-# COPY --from=builder --chown=node:node /home/app/credentials/ ./credentials/
 COPY --from=builder /home/app/package*.json ./
 COPY --from=builder /home/app/node_modules/ ./node_modules/
 COPY --from=builder /home/app/dist/ ./dist/
