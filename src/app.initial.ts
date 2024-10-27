@@ -13,6 +13,7 @@ export function runInitial(app: INestApplication): void {
     // 設定要忽略前綴的routes
     { exclude: [{ path: '/', method: RequestMethod.GET }] },
   );
+  app.enableCors({ origin: '*' });
 
   // 設定驗證request body
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
