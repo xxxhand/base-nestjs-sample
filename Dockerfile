@@ -12,7 +12,7 @@
 # https://www.bretfisher.com/node-docker-good-defaults/
 # http://goldbergyoni.com/checklist-best-practice-of-node-js-in-production/
 
-FROM node:iron-slim as builder
+FROM node:22-slim AS builder
 ENV NODE_ENV build
 # USER node
 WORKDIR /home/app
@@ -25,12 +25,15 @@ RUN yarn build
 
 ## ----------------------------Copy necessary only
 
-FROM node:iron-slim
+FROM node:22-slim
+
+# args
+ARG IMAGE_ID=backend
 
 # Install logrotate
 RUN apt-get update && apt-get -y install logrotate
-RUN mkdir /var/log/backend
-COPY logrotate.conf /etc/logrotate.d/backend
+RUN mkdir /var/log/${IMAGE_ID}
+COPY logrotate.conf /etc/logrotate.d/${IMAGE_ID}
 
 
 ENV NODE_ENV production
