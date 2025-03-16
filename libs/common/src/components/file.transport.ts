@@ -8,7 +8,7 @@ export class FileTransport {
     return this._logger;
   }
 
-  private constructor(){}
+  private constructor() {}
 
   private initialLogger(filePath: string): void {
     this._logger = pino({

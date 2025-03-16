@@ -34,7 +34,7 @@ ARG IMAGE_ID=backend
 RUN apt-get update && apt-get -y install logrotate
 RUN mkdir /var/log/${IMAGE_ID}
 COPY logrotate.conf /etc/logrotate.d/${IMAGE_ID}
-RUN sed -i /s/backend/${IMAGE_ID}/ /etc/logrotate.d/${IMAGE_ID}
+RUN sed -i s/backend/${IMAGE_ID}/ /etc/logrotate.d/${IMAGE_ID}
 
 
 ENV NODE_ENV production

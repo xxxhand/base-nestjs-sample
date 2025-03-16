@@ -9,7 +9,7 @@ import { cmmConf } from '@myapp/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
-import { runInitial } from './app.initial';
+import { runInitial } from './app-components/app.initial';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

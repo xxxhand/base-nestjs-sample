@@ -1,6 +1,6 @@
+import { cmmConf } from '@myapp/common';
 import { INestApplication } from '@nestjs/common';
 import { RequestMethod, VersioningType, ValidationPipe } from '@nestjs/common';
-import { cmmConf } from '@myapp/common';
 
 export function runInitial(app: INestApplication): void {
   // 啟用application shutdown通知

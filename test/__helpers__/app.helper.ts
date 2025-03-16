@@ -2,7 +2,7 @@ import * as superTest from 'supertest';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { INestApplication, InjectionToken } from '@nestjs/common';
 import { AppModule } from '../../src/app.module';
-import { runInitial } from '../../src/app.initial';
+import { runInitial } from '../../src/app-components/app.initial';
 
 export class AppHelper {
   private static _app?: INestApplication = undefined;
