@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 import * as superTest from 'supertest';
 import { CustomUtils } from '@xxxhand/app-common';
-import { AppHelper } from '../__helpers__/app.helper';
-import { MongoHelper } from '../__helpers__/mongo.helper';
+import { AppHelper } from './__helpers__/app.helper';
+import { MongoHelper } from './__helpers__/mongo.helper';
 
 interface IBody {
   name: string;

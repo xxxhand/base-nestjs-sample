@@ -1,7 +1,7 @@
 import * as superTest from 'supertest';
 import { InjectionToken } from '@nestjs/common';
 import { DEFAULT_HTTP_CLIENT } from '@myapp/common';
-import { AppHelper } from '../__helpers__/app.helper';
+import { AppHelper } from './__helpers__/app.helper';
 
 describe(`GET ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples spec`, () => {
   const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples`;

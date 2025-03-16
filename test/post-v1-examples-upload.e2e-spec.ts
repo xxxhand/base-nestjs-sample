@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as superTest from 'supertest';
-import { AppHelper } from '../__helpers__/app.helper';
+import { AppHelper } from './__helpers__/app.helper';
 
 describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload spec`, () => {
   const endpoint = `${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples/upload`;
   let agent: superTest.SuperAgentTest;
-  const testFile = path.join(__dirname, '/upload-files/test-file-2.jpeg');
+  const testFile = path.join(__dirname, '/__upload-files__/test-file-2.jpeg');
   beforeAll(async () => {
     agent = await AppHelper.getAgent();
   });
