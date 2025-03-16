@@ -29,43 +29,43 @@ describe(`POST ${process.env.DEFAULT_API_ROUTER_PREFIX}/v1/examples spec`, () =>
     db.close();
   });
   describe('Required fields', () => {
-    test('[10001] Parameter "name" is empty', async () => {
+    test('[1001] Parameter "name" is empty', async () => {
       const b = _.cloneDeep(defaultBody);
       b.name = '';
       const res = await agent.post(endpoint).send(b);
 
       expect(res.status).toBe(400);
-      expect(res.body.code).toBe(10001);
+      expect(res.body.code).toBe(1001);
       expect(res.body.message).toBe('Client name is empty');
     });
-    test('[10001] Parameter "name" is empty with accept-language: zh-tw', async () => {
+    test('[1001] Parameter "name" is empty with accept-language: zh-tw', async () => {
       const b = _.cloneDeep(defaultBody);
       b.name = '';
       const res = await agent.post(endpoint).set('Accept-Language', 'zh-tw').send(b);
 
       expect(res.status).toBe(400);
-      expect(res.body.code).toBe(10001);
+      expect(res.body.code).toBe(1001);
       expect(res.body.message).toBe('客戶端名稱為空');
     });
-    test('[10002] Parameter "callbackUrl" is empty', async () => {
+    test('[1002] Parameter "callbackUrl" is empty', async () => {
       const b = _.cloneDeep(defaultBody);
       b.callbackUrl = '';
       const res = await agent.post(endpoint).send(b);
 
       expect(res.status).toBe(400);
-      expect(res.body.code).toBe(10002);
+      expect(res.body.code).toBe(1002);
       expect(res.body.message).toBe('Client callback url is empty');
     });
   });
   describe('Validation rules', () => {
-    test('[10003] Client name exists', async () => {
+    test('[1003] Client name exists', async () => {
       await db.getCollection(col).insertOne({ name: 'xxxhand' });
       const b = _.cloneDeep(defaultBody);
       b.name = 'xxxhand';
       const res = await agent.post(endpoint).send(b);
 
       expect(res.status).toBe(400);
-      expect(res.body.code).toBe(10003);
+      expect(res.body.code).toBe(1003);
       expect(res.body.message).toBe('Client duplicated');
     });
   });
