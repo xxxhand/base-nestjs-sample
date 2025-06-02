@@ -13,7 +13,7 @@
 # http://goldbergyoni.com/checklist-best-practice-of-node-js-in-production/
 
 FROM node:jod-slim AS builder
-ENV NODE_ENV build
+ENV NODE_ENV=build
 # USER node
 WORKDIR /home/app
 
@@ -36,8 +36,7 @@ RUN mkdir /var/log/${IMAGE_ID}
 COPY logrotate.conf /etc/logrotate.d/${IMAGE_ID}
 RUN sed -i s/backend/${IMAGE_ID}/ /etc/logrotate.d/${IMAGE_ID}
 
-
-ENV NODE_ENV production
+ENV NODE_ENV=production
 # USER node
 WORKDIR /home/app
 
@@ -47,4 +46,4 @@ COPY --from=builder /home/app/dist/ ./dist/
 COPY --from=builder /home/app/credentials/ ./credentials/
 COPY --from=builder /home/app/resources/ ./resources/
 
-CMD [ "yarn", "start:prod" ]
+CMD ["sh", "-c", "service cron start && yarn start:prod"]
