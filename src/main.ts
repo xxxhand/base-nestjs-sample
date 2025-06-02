@@ -5,7 +5,7 @@ import { expand } from 'dotenv-expand';
 expand({ parsed: dotenv.config().parsed });
 /** Load environment variables */
 
-import { cmmConf } from '@myapp/common';
+import { cmmConf } from '@myapp/conf';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';

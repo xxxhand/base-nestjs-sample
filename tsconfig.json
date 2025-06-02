@@ -24,6 +24,12 @@
       ],
       "@myapp/common/*": [
         "libs/common/src/*"
+      ],
+      "@myapp/conf": [
+        "libs/conf/src"
+      ],
+      "@myapp/conf/*": [
+        "libs/conf/src/*"
       ]
     }
   }

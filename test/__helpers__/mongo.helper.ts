@@ -1,4 +1,4 @@
-import { cmmConf } from '@myapp/common';
+import { cmmConf } from '@myapp/conf';
 import { CustomMongoClient } from '@xxxhand/app-common';
 
 export class MongoHelper {

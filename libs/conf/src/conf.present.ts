@@ -1,6 +1,24 @@
-import { IConfig } from './interfaces/config.interface';
+export interface IConf {
+  port: number;
+  domain: string;
+  defaultApiRouterPrefix: string;
+  defaultUploadTmpDir: string;
+  defaultUploadMaxSize: number;
+  defaultLoggerPath: string;
+  localesPath: string;
+  fallbackLocale: string;
+  defaultMongo: {
+    uri: string;
+    minPoolSize: number;
+    maxPoolSize: number;
+    connectTimeout: number;
+    dbName: string;
+    user: string;
+    password: string;
+  };
+}
 
-export const cmmConf: IConfig = {
+export const cmmConf: IConf = {
   defaultMongo: {
     uri: process.env.DEFAULT_MONGO_URI,
     dbName: process.env.DEFAULT_MONGO_DB_NAME,

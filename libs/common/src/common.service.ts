@@ -1,22 +1,22 @@
 import { Injectable, Inject, LoggerService } from '@nestjs/common';
+import { IConf, ConfService } from '@myapp/conf';
 import { TMongooseClient, CustomResult, TEasyTranslator, CustomUtils, CustomHttpClient } from '@xxxhand/app-common';
-import { CMM_CFG, DEFAULT_MONGO, DEFAULT_TRANSLATE, DEFAULT_HTTP_CLIENT } from './common.const';
-import { IConfig } from './interfaces/config.interface';
+import { DEFAULT_MONGO, DEFAULT_TRANSLATE, DEFAULT_HTTP_CLIENT } from './common.const';
 import { DefaultLoggerService } from './components/default-logger.service';
 import { AsyncLocalStorageProvider } from './clients/async-local-storage.provider';
 @Injectable()
 export class CommonService {
   constructor(
-    @Inject(CMM_CFG) private readonly cmmConf: IConfig,
     @Inject(DEFAULT_MONGO) private readonly defMongoClient: TMongooseClient,
     @Inject(DEFAULT_TRANSLATE) private readonly defTrans: TEasyTranslator,
     @Inject(DEFAULT_HTTP_CLIENT) private readonly defHttpClient: CustomHttpClient,
+    private readonly confService: ConfService,
     private readonly alsProvider: AsyncLocalStorageProvider,
   ) {}
 
   /** Get current project configuration */
-  public getConf(): IConfig {
-    return this.cmmConf;
+  public getConf(): IConf {
+    return this.confService.getConf();
   }
 
   /** Get default mongoose client */
@@ -26,7 +26,7 @@ export class CommonService {
 
   /** Get default logger with context name */
   public getDefaultLogger(context: string): LoggerService {
-    return new DefaultLoggerService().useContext(context).useStorageProvider(this.alsProvider).initialFlieTransport(this.cmmConf.defaultLoggerPath);
+    return new DefaultLoggerService().useContext(context).useStorageProvider(this.alsProvider).initialFlieTransport(this.confService.getConf().defaultLoggerPath);
   }
 
   /** Get current asyncLocalStorage */
@@ -36,7 +36,7 @@ export class CommonService {
 
   /** For multi langs translation */
   public t(key: string, locale?: string): string {
-    return this.defTrans.t(key, CustomUtils.getLangOrDefault(locale, this.cmmConf.fallbackLocale));
+    return this.defTrans.t(key, CustomUtils.getLangOrDefault(locale, this.confService.getConf().fallbackLocale));
   }
 
   /** Get current http client */
