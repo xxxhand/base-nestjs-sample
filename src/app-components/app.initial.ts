@@ -1,4 +1,4 @@
-import { cmmConf } from '@myapp/common';
+import { cmmConf } from '@myapp/conf';
 import { INestApplication } from '@nestjs/common';
 import { RequestMethod, VersioningType, ValidationPipe } from '@nestjs/common';
 

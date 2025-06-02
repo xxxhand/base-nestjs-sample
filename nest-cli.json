@@ -4,7 +4,8 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "builder": "tsc"
+    "builder": "tsc",
+    "webpack": true
   },
   "projects": {
     "common": {
@@ -14,6 +15,15 @@
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "conf": {
+      "type": "library",
+      "root": "libs/conf",
+      "entryFile": "index",
+      "sourceRoot": "libs/conf/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/conf/tsconfig.lib.json"
       }
     }
   }

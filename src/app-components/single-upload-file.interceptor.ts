@@ -1,4 +1,4 @@
-import { cmmConf } from '@myapp/common';
+import { cmmConf } from '@myapp/conf';
 import { CustomValidator } from '@xxxhand/app-common';
 import { applyDecorators, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor, MulterModuleOptions } from '@nestjs/platform-express';
