@@ -1778,10 +1778,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@xxxhand/app-common@^0.0.35":
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/@xxxhand/app-common/-/app-common-0.0.35.tgz#ad5c95617e114fb69c7a1d6fe825d7965d714bc3"
-  integrity sha512-5n0XnFlWsimKNyD6BkbtKc44giaOOvbH5XZwg/t7K1sHrhjK6xIaEC/H0aPMsSOPR6PuOpVA14pAd8uK4pkb3A==
+"@xxxhand/app-common@^0.0.39":
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/@xxxhand/app-common/-/app-common-0.0.39.tgz#c9d6cc077936ad23b34559f4c3eed6af657fb995"
+  integrity sha512-ONlCA4p2Moiw4EIhGpIxr4qQzGf/cFJtFHnbzES89zsgTQdyW811TuPbA1nI7h7hO0Zx2l9nItaA7mLjCKiBfg==
   dependencies:
     "@azure/storage-blob" "^12.17.0"
     "@azure/storage-file-datalake" "^12.26.0"
