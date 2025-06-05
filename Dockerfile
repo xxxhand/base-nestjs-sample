@@ -43,7 +43,7 @@ WORKDIR /home/app
 COPY --from=builder /home/app/package*.json ./
 COPY --from=builder /home/app/node_modules/ ./node_modules/
 COPY --from=builder /home/app/dist/ ./dist/
-COPY --from=builder /home/app/credentials/ ./credentials/
+# COPY --from=builder /home/app/credentials/ ./credentials/
 COPY --from=builder /home/app/resources/ ./resources/
 
 CMD ["sh", "-c", "service cron start && yarn start:prod"]
